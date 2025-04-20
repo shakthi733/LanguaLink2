@@ -1,0 +1,9 @@
+{
+  "name": "LanguaLink - South Indian Language Translator",
+  "short_name": "LanguaLink",
+  "description": "Real-time South Indian language translator with speech recognition",
+  "start_url": "/index/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#9b4dca"
+} 

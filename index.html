@@ -3,53 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>REALTIME SOUTHINDIAN LANGUAGE TRANSLATOR</title>
+  <title>LanguaLink - Real-time Translator</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
 </head>
 <body>
-  <div class="dashboard">
-    <h1>🎤 REALTIME SOUTHINDIAN LANGUAGE TRANSLATOR 🌍</h1>
-    <div class="language-selectors">
-      <div class="language-selector">
-        <label for="input-lang">Input Language:</label>
-        <select id="input-lang">
-          <option value="en">English</option>
-          <option value="hi">Hindi</option>
-          <option value="ta">Tamil</option>
-          <option value="te">Telugu</option>
-          <option value="kn">Kannada</option>
-          <option value="ml">Malayalam</option>
-        </select>
+  <main class="container">
+    <h1>LanguaLink <span class="globe">🌐</span></h1>
+    
+    <div class="translation-box">
+      <div class="text-section">
+        <label for="input-text" class="label">Original Text:</label>
+        <textarea 
+          id="input-text" 
+          placeholder="Say something..."
+          aria-label="Input text for translation">
+        </textarea>
       </div>
-      <div class="language-selector">
-        <label for="output-lang">Output Language:</label>
-        <select id="output-lang">
-          <option value="en">English</option>
-          <option value="hi">Hindi</option>
-          <option value="ta">Tamil</option>
-          <option value="te">Telugu</option>
-          <option value="kn">Kannada</option>
-          <option value="ml">Malayalam</option>
-        </select>
+      
+      <div class="text-section">
+        <label for="translated-text" class="label">Translated Text:</label>
+        <textarea 
+          id="translated-text" 
+          placeholder="Translation will appear here..." 
+          readonly
+          aria-label="Translated text output">
+        </textarea>
+      </div>
+      
+      <div class="language-selectors">
+        <div class="language-selector">
+          <label for="input-lang">Source Language:</label>
+          <select id="input-lang" aria-label="Select source language">
+            <option value="en">English (US)</option>
+            <option value="hi">Hindi</option>
+            <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
+            <option value="kn">Kannada</option>
+            <option value="ml">Malayalam</option>
+          </select>
+        </div>
+        
+        <div class="language-selector">
+          <label for="output-lang">Target Language:</label>
+          <select id="output-lang" aria-label="Select target language">
+            <option value="te">Telugu (India)</option>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="ta">Tamil</option>
+            <option value="kn">Kannada</option>
+            <option value="ml">Malayalam</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <button id="start-btn" class="primary-btn" aria-label="Start speech recognition">
+          <span class="icon" aria-hidden="true">🎤</span>
+          Start Listening
+        </button>
+        <button id="sound-btn" class="secondary-btn" aria-label="Toggle sound output">
+          <span class="icon" aria-hidden="true">🔊</span>
+          Mute
+        </button>
+        <button id="reset-btn" class="danger-btn" aria-label="Reset translation">
+          <span class="icon" aria-hidden="true">🔄</span>
+          Reset
+        </button>
       </div>
     </div>
-    <div class="buttons">
-      <button id="start-btn">Start</button>
-      <button id="reset-btn">Reset</button>
-      <button id="sound-btn">Output Sound: ON</button>
-    </div>
-    <div class="output-box">
-      <div class="input-section">
-        <h3>Input Text:</h3>
-        <p id="input-text">Welcome</p>
-      </div>
-      <div class="translated-section">
-        <h3>Translated Output:</h3>
-        <p id="translated-text"></p>
-      </div>
-    </div>
+    
+    <footer class="copyright">
+      © 2024 LanguaLink. All rights reserved.
+    </footer>
+  </main>
+  
+  <div class="project-credit">
+    Final Project of Batch-10
   </div>
+  
   <script src="script.js"></script>
 </body>
 </html>
