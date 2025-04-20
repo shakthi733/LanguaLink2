@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(145deg, #1e3c72, #2a5298);
+    perspective: 1000px;
+  }
+  
+  .dashboard {
+    width: 90%;
+    max-width: 1200px;
+    min-height: 80vh;
+    margin: 5vh auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform-style: preserve-3d;
+    transform: rotateX(1deg) rotateY(1deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .dashboard:hover {
+    transform: rotateX(0.5deg) rotateY(0.5deg);
+  }
+  
+  button {
+    margin: 0.5rem;
+    padding: 12px 24px;
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    border: none;
+    color: white;
+    border-radius: 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transform: translateZ(20px);
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    transform: translateZ(30px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .output-box > div {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateZ(10px);
+    transition: transform 0.3s ease;
+  }
+  
+  .output-box > div:hover {
+    transform: translateZ(20px);
+  }
+  
+  .output-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+    height: calc(100vh - 200px);
+  }
+  
+  .output-box > div {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    min-height: 150px;
+  }
+  
+  button {
+    margin: 0.5rem;
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    border: none;
+    color: white;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  #input-text, #translated-text {
+    font-size: 1.2rem;
+    color: #333;
+    line-height: 1.6;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+  }
+  
+  .language-selectors {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .language-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .language-selector select {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    width: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .language-selector label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .language-selector label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .dashboard h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
