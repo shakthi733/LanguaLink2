@@ -6,12 +6,24 @@ let voices = [];
 let voicesLoaded = false;
 let micPermissionGranted = false;
 
+// Language mapping for speech recognition and synthesis
+const languageMap = {
+    'en': { code: 'en-IN', name: 'English' },
+    'hi': { code: 'hi-IN', name: 'Hindi' },
+    'ta': { code: 'ta-IN', name: 'Tamil' },
+    'te': { code: 'te-IN', name: 'Telugu' },
+    'kn': { code: 'kn-IN', name: 'Kannada' },
+    'ml': { code: 'ml-IN', name: 'Malayalam' }
+};
+
 // Get DOM elements
 const startBtn = document.getElementById('start-btn');
 const resetBtn = document.getElementById('reset-btn');
 const soundBtn = document.getElementById('sound-btn');
 const inputDisplay = document.getElementById('input-text');
 const translatedDisplay = document.getElementById('translated-text');
+const inputLangSelect = document.getElementById('input-lang');
+const outputLangSelect = document.getElementById('output-lang');
 
 // Initialize Speech Recognition
 async function initSpeechRecognition() {
@@ -38,20 +50,11 @@ async function initSpeechRecognition() {
         
         // Configure recognition settings
         recognition.continuous = false;
-        recognition.interimResults = true;
+        recognition.interimResults = false;
         recognition.maxAlternatives = 1;
 
         // Set initial language
-        const inputLang = document.getElementById('input-lang').value;
-        const langMap = {
-            'en': 'en-IN',
-            'hi': 'hi-IN',
-            'ta': 'ta-IN',
-            'te': 'te-IN',
-            'kn': 'kn-IN',
-            'ml': 'ml-IN'
-        };
-        recognition.lang = langMap[inputLang] || 'en-IN';
+        updateRecognitionLanguage();
 
         recognition.onstart = () => {
             isListening = true;
@@ -70,13 +73,9 @@ async function initSpeechRecognition() {
         };
 
         recognition.onresult = async (event) => {
-            const result = event.results[event.results.length - 1];
-            const transcript = result[0].transcript;
-            
-            if (result.isFinal) {
-                inputDisplay.value = transcript;
-                await handleTranslation(transcript);
-            }
+            const transcript = event.results[0][0].transcript;
+            inputDisplay.value = transcript;
+            await handleTranslation(transcript);
         };
 
         recognition.onerror = (event) => {
@@ -95,30 +94,65 @@ async function initSpeechRecognition() {
     }
 }
 
+// Update recognition language based on selection
+function updateRecognitionLanguage() {
+    if (recognition) {
+        const selectedLang = inputLangSelect.value;
+        recognition.lang = languageMap[selectedLang].code;
+    }
+}
+
+// Translate text using Google Translate API
+async function translateText(text, sourceLang, targetLang) {
+    try {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+        
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Translation failed');
+        }
+
+        const data = await response.json();
+        if (!data || !data[0]) {
+            throw new Error('Invalid translation response');
+        }
+
+        // Extract translated text from response
+        let translatedText = '';
+        data[0].forEach(item => {
+            if (item[0]) {
+                translatedText += item[0];
+            }
+        });
+
+        return translatedText;
+    } catch (error) {
+        console.error('Translation error:', error);
+        throw error;
+    }
+}
+
 // Handle translation process
 async function handleTranslation(text) {
     try {
-        const targetLang = document.getElementById('output-lang').value;
+        const targetLang = outputLangSelect.value;
+        const sourceLang = inputLangSelect.value;
+        
         translatedDisplay.value = 'Translating...';
+        showFeedback('Translating...');
         
-        // Direct translation API call
-        const encodedText = encodeURIComponent(text);
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodedText}`;
+        // Get translation
+        const translation = await translateText(text, sourceLang, targetLang);
         
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Translation failed');
-        
-        const data = await response.json();
-        if (!data || !data[0]) throw new Error('Invalid translation response');
-        
-        // Extract translation
-        const translation = data[0].map(item => item[0]).join(' ');
+        // Display translated text
         translatedDisplay.value = translation;
         
         // Speak the translation if sound is enabled
         if (isSoundEnabled) {
             await speakTranslation(translation, targetLang);
         }
+        
+        showFeedback('Translation complete');
     } catch (error) {
         console.error('Translation error:', error);
         showError('Translation failed. Please try again.');
@@ -134,15 +168,7 @@ async function speakTranslation(text, lang) {
             const utterance = new SpeechSynthesisUtterance(text);
             
             // Set language code
-            const langMap = {
-                'en': 'en-IN',
-                'hi': 'hi-IN',
-                'ta': 'ta-IN',
-                'te': 'te-IN',
-                'kn': 'kn-IN',
-                'ml': 'ml-IN'
-            };
-            utterance.lang = langMap[lang] || lang;
+            utterance.lang = languageMap[lang].code;
             
             // Load voices if not already loaded
             if (!voices.length) {
@@ -241,16 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!isListening && recognition) {
-            const inputLang = document.getElementById('input-lang').value;
-            const langMap = {
-                'en': 'en-IN',
-                'hi': 'hi-IN',
-                'ta': 'ta-IN',
-                'te': 'te-IN',
-                'kn': 'kn-IN',
-                'ml': 'ml-IN'
-            };
-            recognition.lang = langMap[inputLang] || 'en-IN';
             recognition.start();
         } else if (isListening) {
             recognition.stop();
@@ -276,19 +292,13 @@ document.addEventListener('DOMContentLoaded', () => {
         showFeedback(isSoundEnabled ? 'Sound enabled' : 'Sound disabled');
     });
 
-    // Language change handler
-    document.getElementById('input-lang').addEventListener('change', (e) => {
-        if (recognition) {
-            const langMap = {
-                'en': 'en-IN',
-                'hi': 'hi-IN',
-                'ta': 'ta-IN',
-                'te': 'te-IN',
-                'kn': 'kn-IN',
-                'ml': 'ml-IN'
-            };
-            recognition.lang = langMap[e.target.value] || 'en-IN';
-            showFeedback(`Language changed to ${e.target.options[e.target.selectedIndex].text}`);
-        }
+    // Language change handlers
+    inputLangSelect.addEventListener('change', () => {
+        updateRecognitionLanguage();
+        showFeedback(`Input language changed to ${languageMap[inputLangSelect.value].name}`);
+    });
+
+    outputLangSelect.addEventListener('change', () => {
+        showFeedback(`Output language changed to ${languageMap[outputLangSelect.value].name}`);
     });
 });

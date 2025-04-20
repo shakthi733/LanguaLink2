@@ -6,36 +6,20 @@
   <title>LanguaLink - Real-time Translator</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.png" />
 </head>
 <body>
-  <main class="container">
-    <h1>LanguaLink <span class="globe">🌐</span></h1>
+  <div class="container">
+    <header>
+      <h1>LanguaLink <span class="globe">🌐</span></h1>
+    </header>
     
-    <div class="translation-box">
-      <div class="text-section">
-        <label for="input-text" class="label">Original Text:</label>
-        <textarea 
-          id="input-text" 
-          placeholder="Say something..."
-          aria-label="Input text for translation">
-        </textarea>
-      </div>
-      
-      <div class="text-section">
-        <label for="translated-text" class="label">Translated Text:</label>
-        <textarea 
-          id="translated-text" 
-          placeholder="Translation will appear here..." 
-          readonly
-          aria-label="Translated text output">
-        </textarea>
-      </div>
-      
+    <main>
       <div class="language-selectors">
-        <div class="language-selector">
-          <label for="input-lang">Source Language:</label>
-          <select id="input-lang" aria-label="Select source language">
-            <option value="en">English (US)</option>
+        <div class="selector">
+          <label for="input-lang">Input Language:</label>
+          <select id="input-lang">
+            <option value="en">English</option>
             <option value="hi">Hindi</option>
             <option value="ta">Tamil</option>
             <option value="te">Telugu</option>
@@ -44,44 +28,49 @@
           </select>
         </div>
         
-        <div class="language-selector">
-          <label for="output-lang">Target Language:</label>
-          <select id="output-lang" aria-label="Select target language">
-            <option value="te">Telugu (India)</option>
+        <div class="selector">
+          <label for="output-lang">Output Language:</label>
+          <select id="output-lang">
             <option value="en">English</option>
             <option value="hi">Hindi</option>
             <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
             <option value="kn">Kannada</option>
             <option value="ml">Malayalam</option>
           </select>
         </div>
       </div>
-      
-      <div class="buttons">
-        <button id="start-btn" class="primary-btn" aria-label="Start speech recognition">
-          <span class="icon" aria-hidden="true">🎤</span>
-          Start Listening
+
+      <div class="text-displays">
+        <div class="text-box">
+          <label for="input-text">Input Text:</label>
+          <textarea id="input-text" readonly></textarea>
+        </div>
+        
+        <div class="text-box">
+          <label for="translated-text">Translated Text:</label>
+          <textarea id="translated-text" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="start-btn" class="btn primary">
+          <span class="icon">🎤</span>Start Speaking
         </button>
-        <button id="sound-btn" class="secondary-btn" aria-label="Toggle sound output">
-          <span class="icon" aria-hidden="true">🔊</span>
-          Mute
+        <button id="reset-btn" class="btn secondary">
+          <span class="icon">🔄</span>Reset
         </button>
-        <button id="reset-btn" class="danger-btn" aria-label="Reset translation">
-          <span class="icon" aria-hidden="true">🔄</span>
-          Reset
+        <button id="sound-btn" class="btn secondary">
+          <span class="icon">🔊</span>Mute
         </button>
       </div>
-    </div>
-    
-    <footer class="copyright">
-      © 2024 LanguaLink. All rights reserved.
+    </main>
+
+    <footer>
+      <p>© 2024 LanguaLink. All rights reserved.</p>
+      <div class="project-credit">Final Project of Batch-10</div>
     </footer>
-  </main>
-  
-  <div class="project-credit">
-    Final Project of Batch-10
   </div>
-  
   <script src="script.js"></script>
 </body>
 </html>
